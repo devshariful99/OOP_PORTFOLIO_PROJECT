@@ -1,0 +1,20 @@
+{
+    "name": "mdsharifulislam/oopproject",
+    "description": "This is a portfolio project",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "App\\": "App/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Md Shariful Islam"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "nikic/fast-route": "^1.3"
+    }
+}
