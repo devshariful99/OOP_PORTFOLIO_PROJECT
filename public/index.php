@@ -15,6 +15,10 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
     $r->addRoute('GET', '/user/index', [UserController::class, 'index']);
     $r->addRoute('GET', '/user/create', [UserController::class, 'create']);
     $r->addRoute('POST', '/user/store', [UserController::class, 'store']);
+    $r->addRoute('GET', '/user/edit/{id:\d+}', [UserController::class, 'edit']);
+    $r->addRoute('POST', '/user/update/{id:\d+}', [UserController::class, 'update']);
+    $r->addRoute('GET', '/user/delete/{id:\d+}', [UserController::class, 'delete']);
+    $r->addRoute('GET', '/user/status/{id:\d+}', [UserController::class, 'status']);
 });
 
 
@@ -36,6 +40,7 @@ switch ($routeInfo[0]) {
         break;
     case FastRoute\Dispatcher::FOUND:
         [$controller, $method] = $routeInfo[1];
-        call_user_func([new $controller(), $method]);
+        $vars = $routeInfo[2]; // Contains parameters like ['id' => 5]
+        call_user_func_array([new $controller(), $method], $vars); // Properly call controller method with parameters
         break;
 }

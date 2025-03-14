@@ -41,6 +41,7 @@
                                             <th>Email</th>
                                             <th>Status</th>
                                             <th>Created Date</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -51,6 +52,12 @@
                                                 <th><?= $user['email'] ?></th>
                                                 <th><span class="badge<?= $user['status'] == 1 ? ' bg-success' : ' bg-danger' ?>"><?= $user['status'] == 1 ? 'Active' : 'Inactive' ?></span></th>
                                                 <th><?= date('d M, Y', strtotime($user['created_at'])) ?></th>
+                                                <th>
+                                                    <a href="/user/edit/<?= $user['id'] ?>" class="btn btn-sm btn-primary">Edit</a>
+                                                    <a href="/user/status/<?= $user['id'] ?>" class="btn btn-sm <?= $user['status'] == 1 ? 'btn-warning' : 'btn-success' ?>"> <?= $user['status'] == 1 ? 'Inactive' : 'Active' ?></a>
+                                                    <a href="/user/delete/<?= $user['id'] ?>" class="btn btn-sm btn-danger">Delete</a>
+
+                                                </th>
                                             </tr>
                                         <?php endforeach; ?>
                                     </tbody>
