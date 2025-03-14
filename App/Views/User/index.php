@@ -27,7 +27,10 @@
                         <div class="card-body">
                             <div class="d-flex align-items-center justify-content-between">
                                 <h1 class="text-muted">User List</h1>
-                                <a href="/dashboard" class="btn btn-sm btn-primary">Back</a>
+                                <div class="buttons">
+                                    <a href="/user/create" class="btn btn-sm btn-primary">Add User</a>
+                                    <a href="/dashboard" class="btn btn-sm btn-primary">Back</a>
+                                </div>
                             </div>
                             <div class="table-responsive">
                                 <table class="table table-striped">

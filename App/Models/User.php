@@ -12,6 +12,7 @@ class User
     public $id;
     public $name;
     public $email;
+    public $password;
 
     public function __construct($db)
     {
@@ -46,16 +47,16 @@ class User
         return $users;
     }
 
-    // public function create()
-    // {
-    //     $query = "INSERT INTO " . $this->table . " SET name=:name, email=:email";
-    //     $stmt = $this->conn->prepare($query);
+    public function create()
+    {
+        $query = "INSERT INTO " . $this->table . " SET name=:name, email=:email, password=:password";
+        $stmt = $this->conn->prepare($query);
 
-    //     $stmt->bindParam(":name", $this->name);
-    //     $stmt->bindParam(":email", $this->email);
-
-    //     return $stmt->execute();
-    // }
+        $stmt->bindParam(":name", $this->name);
+        $stmt->bindParam(":email", $this->email);
+        $stmt->bindParam(":password", $this->password);
+        return $stmt->execute();
+    }
 
     // public function delete()
     // {

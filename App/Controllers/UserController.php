@@ -33,14 +33,63 @@ class UserController
         require_once "../App/Views/User/index.php";
     }
 
-    // public function store()
-    // {
-    //     $this->userModel->name = $_POST['name'];
-    //     $this->userModel->email = $_POST['email'];
-    //     if ($this->userModel->create()) {
-    //         header("Location: /");
-    //     }
-    // }
+    public function create()
+    {
+        require_once "../App/Views/User/create.php";
+    }
+
+    public function store()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Sanitize input
+            $email = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
+            $name = trim($_POST['name']);
+            $password = trim($_POST['password']);
+            $confirm_password = trim($_POST['confirm_password']);
+            $errors = [];
+
+            // Validation checks
+            if (empty($name)) {
+                $errors[] = "Name field is required.";
+            }
+            if (empty($email)) {
+                $errors[] = "Email field is required.";
+            }
+
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $errors[] = "Invalid email format.";
+            }
+
+            if (empty($password)) {
+                $errors[] = "Password field is required.";
+            }
+            if (!empty($password) && strlen($password) < 6) {
+                $errors[] = "Password must be at least 6 characters long.";
+            }
+
+            if (empty($confirm_password)) {
+                $errors[] = "Confirm Password field is required.";
+            }
+
+            if (!empty($password) && $password !== $confirm_password) {
+                $errors[] = "Passwords do not match.";
+            }
+
+
+
+            if (!empty($errors)) {
+                $_SESSION['errors'] = $errors;
+                header("Location: /user/create");
+            } else {
+                $this->userModel->email = $email;
+                $this->userModel->name = $name;
+                $this->userModel->password = password_hash($password, PASSWORD_DEFAULT);
+                if ($this->userModel->create()) {
+                    header("Location: /user/index");
+                }
+            }
+        }
+    }
 
     // public function destroy()
     // {

@@ -13,6 +13,8 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
 
     $r->addRoute('GET', '/dashboard', [UserController::class, 'dashboard']);
     $r->addRoute('GET', '/user/index', [UserController::class, 'index']);
+    $r->addRoute('GET', '/user/create', [UserController::class, 'create']);
+    $r->addRoute('POST', '/user/store', [UserController::class, 'store']);
 });
 
 
