@@ -33,10 +33,14 @@
                             <h2>Add User</h2>
                         </div>
                         <div class="card-body">
-                            <form action="/user/store" method="post">
+                            <form action="/user/store" method="post" enctype="multipart/form-data">
                                 <div class="form-group mb-3">
                                     <label>Name</label>
                                     <input type="text" name="name" placeholder="Enter name" class="form-control">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label>Image</label>
+                                    <input type="file" name="image" class="form-control">
                                 </div>
                                 <div class="form-group mb-3">
                                     <label>Email</label>

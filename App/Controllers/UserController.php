@@ -78,6 +78,30 @@ class UserController
                 $errors[] = "Passwords do not match.";
             }
 
+            $profileImage = null;
+            if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+                $file = $_FILES['image'];
+                $uploadDir = __DIR__ . '/../../public/uploads/';
+                $fileName = uniqid('profile_', true) . '.' . pathinfo($file['name'], PATHINFO_EXTENSION);
+                $filePath = $uploadDir . $fileName;
+
+                // Validate file type and size
+                $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+                if (!in_array($file['type'], $allowedTypes)) {
+                    $errors[] = 'Invalid file type. Only JPEG, PNG, and GIF are allowed.';
+                }
+                if ($file['size'] > 2 * 1024 * 1024) { // 2MB limit
+                    $errors[] = 'File size exceeds the maximum allowed size of 2MB.';
+                }
+
+                // Move the uploaded file
+                if (empty($errors) && !move_uploaded_file($file['tmp_name'], $filePath)) {
+                    $errors[] = 'Failed to move uploaded file.';
+                } else {
+                    $profileImage = '/uploads/profile_images/' . $fileName; // Relative path
+                }
+            }
+
 
 
             if (!empty($errors)) {
@@ -86,6 +110,7 @@ class UserController
             } else {
                 $this->userModel->email = $email;
                 $this->userModel->name = $name;
+                $this->userModel->image = $profileImage;
                 $this->userModel->password = password_hash($password, PASSWORD_DEFAULT);
                 if ($this->userModel->create()) {
                     header("Location: /user/index");

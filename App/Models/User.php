@@ -13,6 +13,7 @@ class User
     public $name;
     public $email;
     public $password;
+    public $image;
 
     public function __construct($db)
     {
@@ -60,10 +61,11 @@ class User
 
     public function create()
     {
-        $query = "INSERT INTO " . $this->table . " SET name=:name, email=:email, password=:password";
+        $query = "INSERT INTO " . $this->table . " SET name=:name, image=:image, email=:email, password=:password";
         $stmt = $this->conn->prepare($query);
 
         $stmt->bindParam(":name", $this->name);
+        $stmt->bindParam(":image", $this->image);
         $stmt->bindParam(":email", $this->email);
         $stmt->bindParam(":password", $this->password);
         return $stmt->execute();

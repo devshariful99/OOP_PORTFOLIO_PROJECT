@@ -39,6 +39,7 @@
                                             <th>SL</th>
                                             <th>Name</th>
                                             <th>Email</th>
+                                            <th>Image</th>
                                             <th>Status</th>
                                             <th>Created Date</th>
                                             <th>Action</th>
@@ -50,6 +51,13 @@
                                                 <th><?= ++$key ?></th>
                                                 <th><?= $user['name'] ?></th>
                                                 <th><?= $user['email'] ?></th>
+                                                <th>
+                                                    <?php if ($user['image']): ?>
+                                                        <img src="<?= htmlspecialchars($user['image']) ?>" alt="Profile Image" width="50">
+                                                    <?php else: ?>
+                                                        <span>No Image</span>
+                                                    <?php endif; ?>
+                                                </th>
                                                 <th><span class="badge<?= $user['status'] == 1 ? ' bg-success' : ' bg-danger' ?>"><?= $user['status'] == 1 ? 'Active' : 'Inactive' ?></span></th>
                                                 <th><?= date('d M, Y', strtotime($user['created_at'])) ?></th>
                                                 <th>
